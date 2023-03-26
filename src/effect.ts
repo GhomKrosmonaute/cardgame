@@ -1,5 +1,12 @@
 export interface EffectOptions<StackNames extends string> {
+  /**
+   * The name of the effect.
+   */
   name: () => string
+
+  /**
+   * The description of the effect.
+   */
   description: () => string
 }
 
