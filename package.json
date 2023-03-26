@@ -1,0 +1,20 @@
+{
+  "name": "@ghom/cardgame",
+  "version": "1.0.0",
+  "description": "card game core",
+  "main": "src/index.ts",
+  "scripts": {
+    "format": "prettier --write src/**/*.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "prettier": {
+    "semi": false
+  },
+  "author": "ghom",
+  "license": "ISC",
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.2",
+    "prettier": "^2.8.7",
+    "typescript": "^5.0.2"
+  }
+}
