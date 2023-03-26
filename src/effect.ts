@@ -1,34 +1,34 @@
-export interface EffectOptions {
+export interface EffectOptions<StackNames extends string> {
   name: () => string
   description: () => string
 }
 
-export abstract class Effect {
-  protected constructor(public readonly options: EffectOptions) {}
-}
-
-export interface TriggerEffectOptions extends EffectOptions {
+export interface TriggerEffectOptions<StackNames extends string>
+  extends EffectOptions<StackNames> {
   trigger: () => boolean
 }
 
-export class TriggerEffect extends Effect {
-  constructor(public readonly options: TriggerEffectOptions) {
-    super(options)
-  }
-}
-
-export interface PassiveEffectOptions extends EffectOptions {
+export interface PassiveEffectOptions<StackNames extends string>
+  extends EffectOptions<StackNames> {
   condition: () => boolean
 }
 
-export class PassiveEffect extends Effect {
-  constructor(public readonly options: PassiveEffectOptions) {
+export abstract class Effect<StackNames extends string> {
+  protected constructor(public readonly options: EffectOptions<StackNames>) {}
+}
+
+export class TriggerEffect<
+  StackNames extends string
+> extends Effect<StackNames> {
+  constructor(public readonly options: TriggerEffectOptions<StackNames>) {
     super(options)
   }
 }
 
-const effect = new PassiveEffect({
-  name: () => "My Effect",
-  description: () => "My Effect Description",
-  condition: () => true,
-})
+export class PassiveEffect<
+  StackNames extends string
+> extends Effect<StackNames> {
+  constructor(public readonly options: PassiveEffectOptions<StackNames>) {
+    super(options)
+  }
+}

@@ -1,18 +1,24 @@
 import { Card } from "./card"
 
-export interface StackOptions {
-  cards: Card[]
-  onAddToEnd?: (from: Stack, ...cards: Card[]) => boolean
-  onAddToStart?: (from: Stack, ...cards: Card[]) => boolean
+export interface StackOptions<StackNames extends string> {
+  cards: Card<StackNames>[]
+  onAddToEnd?: (
+    from: Stack<StackNames>,
+    ...cards: Card<StackNames>[]
+  ) => boolean
+  onAddToStart?: (
+    from: Stack<StackNames>,
+    ...cards: Card<StackNames>[]
+  ) => boolean
   onShuffle?: () => boolean
-  onRemove?: (...cards: Card[]) => boolean
+  onRemove?: (...cards: Card<StackNames>[]) => boolean
   onCancel?: () => void
 }
 
-export class Stack {
-  constructor(public readonly options: StackOptions) {}
+export class Stack<StackNames extends string> {
+  constructor(public readonly options: StackOptions<StackNames>) {}
 
-  addToEnd(from: Stack, ...cards: Card[]): boolean {
+  addToEnd(from: Stack<StackNames>, ...cards: Card<StackNames>[]): boolean {
     if (this.options.onAddToEnd) {
       if (!this.options.onAddToEnd(from, ...cards)) {
         this.options.onCancel?.()
@@ -30,7 +36,7 @@ export class Stack {
     return true
   }
 
-  addToStart(from: Stack, ...cards: Card[]): boolean {
+  addToStart(from: Stack<StackNames>, ...cards: Card<StackNames>[]): boolean {
     if (this.options.onAddToStart) {
       if (!this.options.onAddToStart(from, ...cards)) {
         this.options.onCancel?.()
@@ -62,7 +68,7 @@ export class Stack {
     return true
   }
 
-  remove(...cards: Card[]): boolean {
+  remove(...cards: Card<StackNames>[]): boolean {
     if (this.options.onRemove) {
       if (!this.options.onRemove(...cards)) {
         this.options.onCancel?.()
