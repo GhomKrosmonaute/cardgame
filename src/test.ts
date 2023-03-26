@@ -29,7 +29,7 @@ const core = new Core({
             new TriggerEffect({
               name: () => "My Effect",
               description: () => "My Effect Description",
-              trigger: () => true,
+              condition: () => true,
             }),
           ],
         }),
